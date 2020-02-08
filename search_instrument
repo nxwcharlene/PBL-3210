@@ -1,0 +1,12 @@
+## DEFINING VARIABLES AND FUNCTIONS
+
+datafile_name = "datafile.csv"  # standardised variable to refer to our datafile in our code
+
+datafile_reader = open("datafile.csv","r")
+instruments_list = 
+
+def search_instrument():
+  instrument = input("Search instrument: ")
+  
+  
+datafile_reader.close()
