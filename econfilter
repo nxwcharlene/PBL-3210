@@ -8,16 +8,15 @@
 from datetime import datetime
 import pandas as pd
 df = pd.read_csv('DummyData.csv')
-#have to use filepath instead of file name
 
-for i in df['Date']:
-    df['Date'] = datetime.strptime(i, "%d/%m/%y")
+#change date from string to datetime format
+df['Date']=pd.to_datetime(df['Date'], format='%m/%d/%Y')
 
-for i in df['Time']:
-   i = datetime.strptime(i, "%H:%M")
-   time_obj = i.time()
+for x in df['Time']:
+   x = datetime.strptime(x, "%H:%M")
+   time_obj = x.time()
 
-print (df)
+print(df)
 
 class user_input:
     def __init__(self, instrument, indicator, surprise_sign_input, surprise_magnitude):
@@ -47,7 +46,7 @@ def surprise_magnitude_calc(row):
 
 df['surprise_magnitude']=df.apply(surprise_magnitude_calc, axis=1) #creates new row for surprise magnitude
 
-print(df)
+#print(df)
 
 if john.surprise_sign_input <> "Meet":
     df_results=df[df['Event'].str.contains(john.indicator)& df['surprise_sign'].str.contains(john.surprise_sign_input)&
@@ -56,9 +55,26 @@ else:
     df_results=df[df['Event'].str.contains(john.indicator)& df['surprise_sign'].str.contains(john.surprise_sign_input)]
 
 list_of_results = df_results['Date']
-print(list_of_results)
+#print(list_of_results)
 
-df_output = pd.read_csv('aapl.csv')
+df_instrument = pd.read_csv('aapl.csv')
+
+print(df_instrument)
+
+df.instrument.columns[0]=pd.to_datetime(df.instrument.columns[0], format='%Y-%m-%d') #KIV!!!!!!
+
+for instrument_date in df_instrument.columns[0]:
+    df.loc[instrument_date == list_of_results]
 
 
+
+#For single_date in list_of_results:
+#    For instrument_date in df_instrument.columns[0]:
+#        if single_date==instrument_date:
+#            df_output.append(df_instrument.loc)
+
+
+#for single_result in list_of_results:
+#    df_output=df.instrument[single_result == list_of_results)
+#print(df_output)
 
