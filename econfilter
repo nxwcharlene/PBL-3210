@@ -7,11 +7,9 @@
 
 from datetime import datetime
 import pandas as pd
-df = pd.read_csv('/Users/tancheklin/Desktop/DummyData.csv')
+df = pd.read_csv('DummyData.csv')
 #have to use filepath instead of file name
 
-
-#format the time and date
 for i in df['Date']:
     df['Date'] = datetime.strptime(i, "%d/%m/%y")
 
@@ -37,7 +35,7 @@ def surprise_sign_calc(row):
   else:
       return('Meet')
 
-df['surprise_sign']=df.apply(surprise_sign_calc, axis=1)
+df['surprise_sign']=df.apply(surprise_sign_calc, axis=1) #create new row for surprise sign
 
 def surprise_magnitude_calc(row):
   if abs((row['Actual']-row['Median Est'])/row['SD'])>2:
@@ -47,7 +45,7 @@ def surprise_magnitude_calc(row):
   else:
       return('Medium')
 
-df['surprise_magnitude']=df.apply(surprise_magnitude_calc, axis=1)
+df['surprise_magnitude']=df.apply(surprise_magnitude_calc, axis=1) #creates new row for surprise magnitude
 
 print(df)
 
@@ -60,5 +58,7 @@ else:
 list_of_results = df_results['Date']
 print(list_of_results)
 
-df_output = pd.read_csv('/Users/tancheklin/Desktop/aapl.csv')
+df_output = pd.read_csv('aapl.csv')
+
+
 
