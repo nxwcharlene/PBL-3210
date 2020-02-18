@@ -5,16 +5,28 @@
 # filter data: according to request
 # output: find date
 
+from datetime import datetime
 import pandas as pd
-df = pd.read_csv('/Users/Valeriey/Desktop/DummyData.csv')
+df = pd.read_csv('/Users/tancheklin/Desktop/DummyData.csv')
+#have to use filepath instead of file name
 
+
+#format the time and date
+for i in df['Date']:
+    df['Date'] = datetime.strptime(i, "%d/%m/%y")
+
+for i in df['Time']:
+   i = datetime.strptime(i, "%H:%M")
+   time_obj = i.time()
+
+print (df)
 
 class user_input:
     def __init__(self, instrument, indicator, surprise_sign_input, surprise_magnitude):
         self.instrument = instrument  # to link to drop down
         self.indicator = indicator  # to link to autofill
         self.surprise_sign_input = surprise_sign_input  # to link to drop down (exceed, meet, below expections)
-        self.surprise_magnitude = surprise_magnitude  # to link to drop down (large, medium, small)
+        self.surprise_magnitude = surprise_magnitude  # to link to drop down (large, medium, small), if user chooses 'meet', cannot choose magnitude
 john=user_input("Apple","ISM Maunfacturing","Exceed","Small")
 
 def surprise_sign_calc(row):
@@ -37,8 +49,16 @@ def surprise_magnitude_calc(row):
 
 df['surprise_magnitude']=df.apply(surprise_magnitude_calc, axis=1)
 
-df_results=df[df['Event'].str.contains(john.indicator)& df['surprise_sign'].str.contains(john.surprise_sign_input)&
-              df['surprise_magnitude'].str.contains(john.surprise_magnitude)]
+print(df)
 
-print(df_results['Date'])
-    
+if john.surprise_sign_input <> "Meet":
+    df_results=df[df['Event'].str.contains(john.indicator)& df['surprise_sign'].str.contains(john.surprise_sign_input)&
+              df['surprise_magnitude'].str.contains(john.surprise_magnitude)]
+else:
+    df_results=df[df['Event'].str.contains(john.indicator)& df['surprise_sign'].str.contains(john.surprise_sign_input)]
+
+list_of_results = df_results['Date']
+print(list_of_results)
+
+df_output = pd.read_csv('/Users/tancheklin/Desktop/aapl.csv')
+
