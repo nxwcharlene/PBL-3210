@@ -1,0 +1,22 @@
+## PULLING DATA FROM APIS
+
+## Importing libraries and modules that we need:
+
+## To handle the API output:
+## import "requests" to connect to the URL, 
+## import "json" to parse the JSON output and extract the data we need,
+## import "quandl" to pull US macroeconomic data
+## QUANDL API KEY: "S4xoWAYgz_GMGyxfVAhU"
+## FRED API KEY: "4adf5e46b8703f26953613cb46f459a5"
+
+## -------------------------------------------------------------------------------------------
+
+import requests
+import json
+url = ""
+responses = requests.get(url)
+
+# testing connection
+print(responses)
+data = response.text
+
