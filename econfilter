@@ -8,8 +8,8 @@
 from datetime import datetime
 import pandas as pd
 df = pd.read_csv('DummyData.csv')
+#have to use filepath instead of file name
 
-#change date from string to datetime format
 df['Date']=pd.to_datetime(df['Date'], format='%m/%d/%Y')
 
 for x in df['Time']:
@@ -55,26 +55,19 @@ else:
     df_results=df[df['Event'].str.contains(john.indicator)& df['surprise_sign'].str.contains(john.surprise_sign_input)]
 
 list_of_results = df_results['Date']
-#print(list_of_results)
+print(list_of_results)
 
 df_instrument = pd.read_csv('aapl.csv')
 
+df_instrument.iloc[:,0]=pd.to_datetime(df_instrument.iloc[:,0], format='%Y-%m-%d') #for some reason cannot use df_instrument.columns[0] here
+
+#set date column as index
+df_instrument.set_index(df_instrument.columns[0], inplace=True)
+
 print(df_instrument)
 
-df.instrument.columns[0]=pd.to_datetime(df.instrument.columns[0], format='%Y-%m-%d') #KIV!!!!!!
+#match results with index of the row
+for shortlisted_date in list_of_results:
+    df_output = df_instrument.loc[[shortlisted_date]]
 
-for instrument_date in df_instrument.columns[0]:
-    df.loc[instrument_date == list_of_results]
-
-
-
-#For single_date in list_of_results:
-#    For instrument_date in df_instrument.columns[0]:
-#        if single_date==instrument_date:
-#            df_output.append(df_instrument.loc)
-
-
-#for single_result in list_of_results:
-#    df_output=df.instrument[single_result == list_of_results)
-#print(df_output)
-
+print(df_output)
