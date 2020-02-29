@@ -48,7 +48,7 @@ df['surprise_magnitude']=df.apply(surprise_magnitude_calc, axis=1) #creates new 
 
 #print(df)
 
-if john.surprise_sign_input <> "Meet":
+if john.surprise_sign_input != "Meet":
     df_results=df[df['Event'].str.contains(john.indicator)& df['surprise_sign'].str.contains(john.surprise_sign_input)&
               df['surprise_magnitude'].str.contains(john.surprise_magnitude)]
 else:
