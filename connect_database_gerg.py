@@ -1,5 +1,5 @@
 
-# connecting to mysql database to the python code, from a remote computer
+# connecting to mysql database to the python code, from any remote computer
 
 import mysql.connector
 db_connection = mysql.connector.connect(user='greg', password='sharedpassword',host='172.22.143.201',
